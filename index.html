@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hộp Quà Bất Ngờ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. MÀN HÌNH KHÓA PIN -->
+    <div id="lock-screen" class="screen active">
+        <div class="pin-container">
+            <div class="avatar-box">
+                <!-- Thay link ảnh của bạn vào đây -->
+                <img src="https://i.postimg.cc/RZQG2pQn/z8018357708399-d54ae03a0914c1f1273471738a972892.jpg" alt="Avatar">
+            </div>
+            <div class="pin-display">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <div class="pin-keypad">
+                <button onclick="pressKey(1)">1</button><button onclick="pressKey(2)">2</button><button onclick="pressKey(3)">3</button>
+                <button onclick="pressKey(4)">4</button><button onclick="pressKey(5)">5</button><button onclick="pressKey(6)">6</button>
+                <button onclick="pressKey(7)">7</button><button onclick="pressKey(8)">8</button><button onclick="pressKey(9)">9</button>
+                <button class="clear" onclick="clearPIN()">C</button><button onclick="pressKey(0)">0</button><button class="back" onclick="backspacePIN()">⌫</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. MÀN HÌNH MENU CHÍNH -->
+    <div id="menu-screen" class="screen">
+        <h2>☁️Umbala mở quà đê!☁️</h2>
+        <div class="menu-grid">
+            <button class="menu-item" onclick="openFeature('music')">🎵 Music</button>
+            <button class="menu-item" onclick="openFeature('letter')">✉️ Letter</button>	
+            <button class="menu-item" onclick="openFeature('gift')">☁️</button>
+        </div>
+    </div>
+
+    <!-- 3. CÁC MÀN HÌNH TÍNH NĂNG CHI TIẾT -->
+    <!-- Tính năng Thư (Letter) -->
+    <div id="feature-letter" class="sub-screen">
+        <button class="close-btn" onclick="closeFeature()">❌</button>
+        <div class="letter-box">
+            <p id="typewriter-text"></p>
+        </div>
+    </div>
+
+    <!-- Tính năng Quà tặng 3D (Gift Carousel) -->
+<div id="feature-gift" class="sub-screen">
+    <button class="close-btn" onclick="closeFeature()">❌</button>
+    <div class="carousel-container">
+        <div class="carousel-3d">
+            <!-- Thay các link ảnh của bạn vào đây -->
+            <div class="carousel-item" style="--i:1;"><img src="https://i.postimg.cc/X7cRLqCh/z7900939105739-fd8e64279c10f543de0a3994983cf9d8.jpg"></div>
+            <div class="carousel-item" style="--i:2;"><img src="https://i.postimg.cc/k5VY0g2g/z7900939402651-911ae917af1aafac42449e0d238d93bf.jpg"></div>
+            <div class="carousel-item" style="--i:3;"><img src="https://i.postimg.cc/LXLCsQB4/z7900939595500-f807ad9348ca82ba2bb25601184130c9.jpg"></div>
+            
+            <!-- Ảnh 4 và 5 đã được thêm thẻ <img src="..."> chuẩn chỉnh -->
+            <div class="carousel-item" style="--i:4;"><img src="https://i.postimg.cc/j51MZ0xz/z8018280393729-87b102ae325b39b09b191c8331789f26.jpg"></div>
+            <div class="carousel-item" style="--i:5;"><img src="https://i.postimg.cc/mDp5J1wz/z8018280395149-dce1c68337b7ad5ed6d3135b9eb530d4.jpg"></div>
+            
+            <div class="carousel-item" style="--i:6;"><img src="https://i.postimg.cc/LscS7767/Screenshot-2026-07-07-202232.png"></div>
+        </div>
+    </div>
+</div>
+
+    <!-- Tính năng Trình phát nhạc (Music Player) -->
+<div id="feature-music" class="sub-screen">
+    <button class="close-btn" onclick="closeFeature()">❌</button>
+    <div class="music-player">
+        <div class="music-disc-container">
+            <!-- Thay link ảnh đại diện bài hát hoặc ảnh người yêu ở đây nhé -->
+            <img id="music-avatar" src="https://phukiennillkin.com/wp-content/uploads/2026/03/meme-jerry-6.jpg" class="disc" alt="Song Avatar">
+        </div>
+        <div class="music-info">
+            <!-- Sửa tên bài hát và ca sĩ tại đây -->
+            <h3 id="song-title">Đừng làm trái tim anh đau 🎶</h3>
+                    </div>
+        <div class="music-controls">
+            <button id="play-pause-btn" onclick="togglePlayMusic()">▶️ Play</button>
+        </div>
+    </div>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>
