@@ -3,7 +3,7 @@
 // CẤU HÌNH WEBSITE MAYA
 // ===============================
 const CORRECT_PIN = "0313";
-const ANNIVERSARY = new Date("2026-04-16T00:00:00+07:00");
+const startDate = new Date("2026-04-13T00:00:00");
 
 // Giữ nguyên nhạc từ website cũ
 const bgMusic = new Audio("https://files.catbox.moe/s2l13g.mp3");
