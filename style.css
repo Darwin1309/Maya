@@ -1,245 +1,544 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-    --pink-bg: #ffe4e1;
-    --pink-main: #ff69b4;
-    --pink-dark: #ff1493;
+    --pink: #ff78c8;
+    --purple: #a78bfa;
+    --cyan: #8be9fd;
+    --bg: #090615;
+    --glass: rgba(255,255,255,.075);
+    --border: rgba(255,255,255,.16);
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+    min-height: 100%;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    color: #fff;
 }
 
 body {
-    background-color: var(--pink-bg);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 20% 20%, #39205d 0, transparent 42%),
+        radial-gradient(ellipse at 80% 75%, #42164b 0, transparent 40%),
+        linear-gradient(135deg, #090615, #160d2d 55%, #090615);
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
-/* Định dạng các màn hình */
-.screen, .sub-screen {
+button, a {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.stars, .hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.star {
     position: absolute;
-    width: 100%;
-    max-width: 400px;
-    height: 100vh;
-    max-height: 700px;
+    width: 3px;
+    height: 3px;
     background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-radius: 50%;
+    box-shadow: 0 0 10px #fff, 0 0 18px var(--pink);
+    animation: twinkle 2.5s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: .25; transform: scale(.7); }
+    50% { opacity: 1; transform: scale(1.5); }
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -40px;
+    color: #ff8bd4;
+    font-size: 20px;
+    opacity: .7;
+    animation: floatUp 7s linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.screen, .sub-screen {
+    position: relative;
+    z-index: 1;
     display: none;
-    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    padding: 35px 18px;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    overflow: hidden;
 }
 
 .screen.active, .sub-screen.active {
     display: flex;
+    animation: screenIn .55s ease both;
 }
 
-/* --- MÀN HÌNH KHÓA PIN --- */
+@keyframes screenIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.glass-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border-radius: 26px;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35),
+        inset 0 1px rgba(255,255,255,.1),
+        0 0 35px rgba(184,110,255,.08);
+}
+
+.lock-card {
+    width: min(100%, 390px);
+    padding: 32px 25px;
+    text-align: center;
+}
+
+.avatar-box {
+    margin-bottom: 18px;
+}
+
 .avatar-box img {
-    width: 120px;
-    height: 120px;
-    border-radius: 15px;
+    width: 115px;
+    height: 115px;
     object-fit: cover;
-    border: 3px solid var(--pink-main);
-    margin-bottom: 20px;
+    border-radius: 50%;
+    border: 3px solid var(--pink);
+    box-shadow: 0 0 25px rgba(255,120,200,.55);
+}
+
+.eyebrow {
+    color: #d7b8ff;
+    letter-spacing: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #ff9bd8, #c5a5ff, #91e8ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+h1, h2 {
+    line-height: 1.3;
+}
+
+.lock-card h1 {
+    font-size: 29px;
+}
+
+.sub-title {
+    color: #c5bad7;
+    font-size: 13px;
+    margin-top: 9px;
 }
 
 .pin-display {
     display: flex;
-    gap: 15px;
-    margin-bottom: 30px;
+    justify-content: center;
+    gap: 17px;
+    margin: 27px 0;
 }
 
 .pin-display .dot {
-    width: 15px;
-    height: 15px;
-    border: 2px solid var(--pink-main);
+    width: 13px;
+    height: 13px;
+    border: 2px solid #e5a3e9;
     border-radius: 50%;
-    transition: 0.2s;
+    transition: .2s;
 }
 
 .pin-display .dot.filled {
-    background-color: var(--pink-main);
+    background: var(--pink);
+    box-shadow: 0 0 13px var(--pink);
 }
 
 .pin-keypad {
+    width: min(100%, 250px);
+    margin: auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
+    gap: 12px;
 }
 
 .pin-keypad button {
-    width: 60px;
-    height: 60px;
+    aspect-ratio: 1;
+    border: 1px solid rgba(255,255,255,.15);
     border-radius: 50%;
-    border: none;
-    background: #fdf0f5;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--pink-dark);
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.pin-keypad button:active {
-    background: var(--pink-main);
     color: #fff;
+    background: rgba(255,255,255,.09);
+    font-size: 20px;
+    transition: .2s;
 }
 
-/* --- MENU CHÍNH --- */
+.pin-keypad button:hover,
+.pin-keypad button:active {
+    background: linear-gradient(135deg, #ff75c8, #986bff);
+    transform: scale(1.07);
+    box-shadow: 0 0 20px rgba(255,117,200,.35);
+}
 
+.pin-keypad .special {
+    color: #ff9bd8;
+}
+
+.pin-message {
+    min-height: 20px;
+    color: #ff9bd8;
+    font-size: 12px;
+    margin-top: 15px;
+}
+
+.main-content {
+    width: min(100%, 850px);
+    text-align: center;
+    padding: 25px 0;
+}
+
+.main-title {
+    font-size: clamp(30px, 6vw, 48px);
+    font-weight: 800;
+}
+
+.anniversary-card {
+    max-width: 570px;
+    margin: 30px auto;
+    padding: 24px 18px;
+}
+
+.anniversary-card h2 {
+    color: #ffb4e1;
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.anniversary-card > p:not(.eyebrow) {
+    color: #ded3eb;
+    font-size: 13px;
+}
+
+.counter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.counter-grid div {
+    padding: 13px 5px;
+    border-radius: 15px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.1);
+}
+
+.counter-grid strong {
+    display: block;
+    color: #ff9bd8;
+    font-size: clamp(22px, 5vw, 30px);
+}
+
+.counter-grid span {
+    display: block;
+    color: #c9bedb;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.small-note {
+    color: #b9a9ce;
+    font-size: 11px;
+    margin-top: 15px;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    max-width: 600px;
+    margin: auto;
+}
 
 .menu-item {
-    padding: 20px;
-    border: 2px solid #ffb6c1;
-    background: #fff0f5;
-    border-radius: 15px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: 0.3s;
+    min-height: 140px;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.075);
+    backdrop-filter: blur(16px);
+    transition: .3s;
 }
 
 .menu-item:hover {
-    background: var(--pink-main);
-    color: white;
-    transform: translateY(-3px);
+    color: #fff;
+    transform: translateY(-7px);
+    border-color: #ff91d1;
+    background: rgba(255,120,200,.13);
+    box-shadow: 0 12px 35px rgba(255,100,200,.15);
 }
 
-/* --- NÚT ĐÓNG --- */
+.menu-icon {
+    font-size: 35px;
+}
+
+.menu-item > span:nth-child(2) {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.menu-item small {
+    color: #c8badb;
+    font-size: 10px;
+}
+
+.game-link {
+    border-color: rgba(255,130,205,.45);
+    background: linear-gradient(135deg, rgba(255,110,190,.15), rgba(145,100,255,.16));
+}
+
+.footer-text {
+    color: #8f7da9;
+    font-size: 11px;
+    margin-top: 30px;
+}
+
+.sub-screen {
+    padding: 60px 18px 30px;
+}
+
 .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
+    position: fixed;
+    z-index: 5;
+    top: 18px;
+    right: 18px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(255,255,255,.12);
+    font-size: 18px;
 }
 
-/* --- HIỆU ỨNG XOAY 3D (GIFT CAROUSEL) --- */
+.close-btn:hover {
+    background: #ff65b9;
+}
+
+.letter-box {
+    width: min(100%, 680px);
+    padding: 35px;
+    line-height: 1.9;
+    color: #eee3fa;
+    white-space: pre-wrap;
+    font-size: 14px;
+}
+
+.letter-box h2 {
+    margin-bottom: 22px;
+}
+
+.letter-end {
+    display: block;
+    text-align: right;
+    color: #ff9bd8;
+    margin-top: 20px;
+}
+
+.gallery-content {
+    width: min(100%, 750px);
+    text-align: center;
+}
+
 .carousel-container {
-    perspective: 1000px;
     width: 100%;
-    height: 200px;
+    height: 330px;
+    margin: 35px auto 15px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    perspective: 1100px;
+    overflow: hidden;
 }
 
 .carousel-3d {
-    width: 120px;
-    height: 160px;
     position: relative;
+    width: 155px;
+    height: 210px;
     transform-style: preserve-3d;
-    animation: rotateCarousel 15s infinite linear;
+    animation: rotateGallery 24s linear infinite;
+}
+
+.carousel-container:hover .carousel-3d {
+    animation-play-state: paused;
+}
+
+@keyframes rotateGallery {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
 }
 
 .carousel-item {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    transform: rotateY(calc(var(--i) * 60deg)) translateZ(150px);
-    backface-visibility: visible;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 15px;
+    border: 2px solid rgba(255,255,255,.6);
+    box-shadow: 0 0 22px rgba(255,110,200,.25);
+    transform: rotateY(calc(var(--i) * 60deg)) translateZ(245px);
 }
 
 .carousel-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
-    border: 2px solid white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-@keyframes rotateCarousel {
-    from { transform: rotateY(0deg); }
-    to { transform: rotateY(360deg); }
-}
-
-/* Hiệu ứng bong bóng tim rơi/bay ngẫu nhiên */
-.heart-bubble {
-    position: absolute;
-    pointer-events: none;
-    animation: floatUp 4s linear forwards;
-    font-size: 24px;
-}
-
-@keyframes floatUp {
-    0% { transform: translateY(100vh) scale(0); opacity: 1; }
-    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-}
-#typewriter-text {
-    white-space: pre-line; /* Giúp giữ nguyên các hàng xuống dòng khi gõ chữ */
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #333;
-}
-/* --- GIAO DIỆN MUSIC PLAYER --- */
 .music-player {
+    width: min(100%, 400px);
+    padding: 35px 25px;
     text-align: center;
-    width: 100%;
-    padding: 20px;
 }
 
 .music-disc-container {
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
+    width: 190px;
+    height: 190px;
+    margin: 25px auto;
 }
 
-/* Biến ảnh thành hình tròn và tạo viền hồng */
 .disc {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    border: 6px solid #ffb6c1;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    /* Hiệu ứng xoay tròn liên tục */
-    animation: rotateDisc 10s infinite linear;
-    animation-play-state: paused; /* Mặc định dừng, khi phát nhạc mới xoay */
+    border-radius: 50%;
+    border: 8px solid #211331;
+    box-shadow: 0 0 30px rgba(255,100,200,.35);
+    animation: discRotate 9s linear infinite;
+    animation-play-state: paused;
 }
 
-.music-info h3 {
-    color: var(--pink-dark);
-    margin-bottom: 8px;
-    font-size: 1.3rem;
+.disc.playing {
+    animation-play-state: running;
 }
 
-.music-info p {
-    color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 30px;
-}
-
-#play-pause-btn {
-    padding: 12px 40px;
-    background: linear-gradient(135deg, var(--pink-main), var(--pink-dark));
-    border: none;
-    color: white;
-    border-radius: 25px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
-    transition: transform 0.2s;
-}
-
-#play-pause-btn:active {
-    transform: scale(0.95);
-}
-
-@keyframes rotateDisc {
-    from { transform: rotate(0deg); }
+@keyframes discRotate {
     to { transform: rotate(360deg); }
+}
+
+.music-player h2 {
+    font-size: 21px;
+}
+
+.music-controls button {
+    margin-top: 25px;
+    padding: 13px 35px;
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    font-weight: 700;
+    background: linear-gradient(100deg, #ff72c4, #956bff);
+    box-shadow: 0 7px 25px rgba(255,100,200,.25);
+}
+
+.music-controls button:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+    .screen, .sub-screen {
+        padding: 25px 14px;
+    }
+
+    .lock-card {
+        padding: 25px 18px;
+    }
+
+    .main-content {
+        padding: 15px 0;
+    }
+
+    .anniversary-card {
+        padding: 20px 12px;
+    }
+
+    .counter-grid {
+        gap: 6px;
+    }
+
+    .counter-grid div {
+        padding: 10px 3px;
+    }
+
+    .menu-grid {
+        gap: 10px;
+    }
+
+    .menu-item {
+        min-height: 125px;
+        padding: 14px 7px;
+    }
+
+    .menu-item > span:nth-child(2) {
+        font-size: 15px;
+    }
+
+    .carousel-container {
+        height: 290px;
+    }
+
+    .carousel-3d {
+        width: 125px;
+        height: 175px;
+    }
+
+    .carousel-item {
+        transform: rotateY(calc(var(--i) * 60deg)) translateZ(190px);
+    }
+
+    .letter-box {
+        padding: 25px 19px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 360px) {
+    .counter-grid strong {
+        font-size: 19px;
+    }
+
+    .menu-icon {
+        font-size: 29px;
+    }
 }
